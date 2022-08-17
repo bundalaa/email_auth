@@ -24,6 +24,8 @@ try:
     OrgMail = os.getenv("mailID")
     OrgPass = os.getenv("password")
 
+    serviceProvider = os.getenv("SERVICE_PROVIDER")
+
 
     port = os.getenv("mailPort")
     fromMail = "Auth@gmail.com"
@@ -83,7 +85,8 @@ try:
     message['Subject'] = f"Login OTP for {CompanyName}"
     converted = MIMEText(html, 'html')
     message.attach(converted)
-    server = smtplib.SMTP('smtp.gmail.com', port)
+    
+    server = smtplib.SMTP('smtp.gmail.com' if(serviceProvider == "GOOGLE") else 'smtp.office365.com', port)
     server.starttls()
     try:
         server.login(OrgMail, OrgPass)
